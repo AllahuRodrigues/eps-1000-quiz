@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPS 1000 Contestant Screen</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .stage .answer { font-size: clamp(16px, 2vw, 22px); max-width: 1000px; margin: 0 auto; }
+  .stage .score-board { max-width: 700px; margin: 0 auto; width: 100%; }
+  .stage .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .who { text-align: center; font-size: clamp(18px, 2.4vw, 28px); font-weight: 700; color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="top">
+    <span class="tag accent" id="topic">EPS 1000 · Midterm 1</span>
+    <span class="small muted" id="pos"></span>
+    <span class="timer" id="timer" style="visibility:hidden">--</span>
+  </div>
+  <div class="score-board" id="board"></div>
+  <div class="who" id="who"></div>
+  <div class="big-q" id="q">Waiting for the host to start a game…</div>
+  <div id="ansWrap" class="hidden">
+    <div class="host-only" style="max-width:1000px; margin:0 auto; background:var(--surface-2); border-color:var(--line)">
+      <div class="label" style="color:var(--ink-2)">Model answer</div>
+      <div class="answer" id="ans"></div>
+    </div>
+  </div>
+  <p class="small muted center" style="margin-top:auto">Contestant view: the answer appears only after the host scores the question. Keep this window on the screen the contestant can see.</p>
+</div>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+(function () {
+  const { store, md, esc } = App;
+  const $ = id => document.getElementById(id);
+  const fmt = n => (Math.round(n * 2) / 2).toString().replace('.5', '½').replace(/^0½/, '½');
+  let last = '';
+
+  function render(s) {
+    if (!s) return;
+    const sig = JSON.stringify(s);
+    if (sig === last) return;
+    last = sig;
+    if (s.phase === 'idle' || !s.q) {
+      $('q').textContent = 'Waiting for the host to start a game…';
+      $('board').innerHTML = ''; $('who').textContent = ''; $('pos').textContent = '';
+      $('ansWrap').classList.add('hidden'); $('timer').style.visibility = 'hidden';
+      return;
+    }
+    $('topic').textContent = s.topic || 'EPS 1000';
+    $('pos').textContent = s.finished ? 'Final scores' : `Question ${s.i + 1} of ${s.n}`;
+    const multi = s.players.length > 1;
+    const active = s.steal != null ? s.steal : s.turn;
+    $('board').innerHTML = s.players.map((p, k) => `
+      <div class="player ${multi && !s.finished && k === active ? 'turn' : ''}">
+        <div class="name">${esc(p.name)}</div><div class="pts">${fmt(p.score)}</div></div>`).join('');
+    $('who').textContent = s.finished ? '' : multi ? (s.steal != null ? `${s.players[s.steal].name}: steal chance!` : `${s.players[s.turn].name}, your question`) : '';
+    $('q').innerHTML = s.finished ? 'Game over. Thanks for playing!' : md(s.q).replace(/^<p>|<\/p>$/g, '');
+    if (s.answer && !s.finished) { $('ans').innerHTML = md(s.answer); $('ansWrap').classList.remove('hidden'); }
+    else $('ansWrap').classList.add('hidden');
+    if (s.timer != null && !s.finished) {
+      $('timer').style.visibility = 'visible';
+      $('timer').textContent = Math.floor(s.timer / 60) + ':' + String(s.timer % 60).padStart(2, '0');
+      $('timer').classList.toggle('low', s.timer <= 10);
+    } else $('timer').style.visibility = 'hidden';
+  }
+
+  let chan = null;
+  try { chan = new BroadcastChannel('eps1000-quizmaster'); chan.onmessage = ev => render(ev.data); chan.postMessage({ type: 'hello' }); } catch (e) { chan = null; }
+  window.addEventListener('storage', ev => { if (ev.key === 'eps1000:qm-live') render(store.get('qm-live', null)); });
+  render(store.get('qm-live', null));
+  setInterval(() => render(store.get('qm-live', null)), 1000); // fallback for browsers that don't share channels on file://
+})();
+</script>
+</body>
+</html>

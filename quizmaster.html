@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPS 1000 Quizmaster</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+
+  <!-- ===== Setup ===== -->
+  <section id="setup">
+    <h1>Quizmaster</h1>
+    <p class="sub">A friend (the <b>host</b>) holds this screen, reads each question out loud, sees the model answer, and scores you. You answer out loud. Play with <b>1 contestant</b> (you) or <b>2 contestants</b> (head-to-head). To show contestants only the question on a second screen, use <b>Open contestant screen</b>.</p>
+
+    <div class="card">
+      <h2 style="margin-top:0">Players</h2>
+      <div class="chips" id="modeChips">
+        <button type="button" class="chip on" data-n="1">1 contestant</button>
+        <button type="button" class="chip" data-n="2">2 contestants (head-to-head)</button>
+      </div>
+      <div class="grid cols-2" style="margin-top:12px">
+        <label class="field">Contestant 1 name <input type="text" id="p1" value="Me" maxlength="24"></label>
+        <label class="field" id="p2wrap">Contestant 2 name <input type="text" id="p2" value="Friend" maxlength="24"></label>
+      </div>
+
+      <h2>Game settings</h2>
+      <div class="grid cols-3">
+        <label class="field">Number of questions
+          <select id="nq"><option>10</option><option selected>15</option><option>20</option><option>30</option><option value="all">All selected</option></select>
+        </label>
+        <label class="field">Timer per question
+          <select id="timer"><option value="0">No timer</option><option value="45">45 s</option><option value="60" selected>60 s</option><option value="90">90 s</option><option value="120">2 min</option></select>
+        </label>
+        <label class="field" id="stealWrap">If a contestant misses
+          <select id="steal"><option value="on">Other player may steal (+1)</option><option value="off">No steals</option></select>
+        </label>
+      </div>
+      <h3>Topics</h3>
+      <div class="chips" id="chips"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn primary lg" id="start">Start game</button>
+        <span class="muted small" id="count"></span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2 style="margin-top:0">How scoring works</h2>
+      <ul class="small muted" style="margin:0; padding-left:18px">
+        <li><b>Correct</b> = 1 point. <b>Partly</b> = ½ point (key idea right but the "why" is missing). <b>Wrong</b> = 0.</li>
+        <li>With 2 contestants, turns alternate. If steals are on and someone misses or only partly answers, the other contestant can steal for 1 point.</li>
+        <li>Host tip: the <b>key ideas</b> under the answer are what a full-credit answer should mention. Award "Correct" only if they explain <i>why</i>.</li>
+        <li>Keyboard: <kbd>C</kbd> correct · <kbd>P</kbd> partly · <kbd>W</kbd> wrong · <kbd>N</kbd> next · <kbd>H</kbd> hide/show answer · <kbd>T</kbd> pause timer.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Game ===== -->
+  <section id="game" class="hidden">
+    <div class="row between" style="margin:6px 0 10px">
+      <span class="tag accent" id="gTopic"></span>
+      <span class="small muted" id="gPos"></span>
+      <span class="timer" id="gTimer">--</span>
+    </div>
+    <div class="progress thin" style="margin-bottom:14px"><span class="p-accent" id="gBar"></span></div>
+
+    <div class="score-board" id="board"></div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="small muted" id="turnLine" style="margin-bottom:6px"></div>
+      <div class="qm-question" id="gQ"></div>
+    </div>
+
+    <div class="host-only" id="hostBox" style="margin-top:14px">
+      <div class="row between">
+        <span class="label">Host only · model answer</span>
+        <button class="btn ghost" id="hideBtn" style="min-height:32px; padding:4px 10px">Hide <span class="kbd">H</span></button>
+      </div>
+      <div id="hostAnswer">
+        <div class="answer" id="gA" style="margin-top:8px"></div>
+        <div class="small muted" style="margin-top:6px">Key ideas to listen for:</div>
+        <div id="gK"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px" id="gradeBox">
+      <div class="small muted" id="gradeFor"></div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn good lg" id="bC">Correct +1 <span class="kbd">C</span></button>
+        <button class="btn mid lg" id="bP">Partly +½ <span class="kbd">P</span></button>
+        <button class="btn bad lg" id="bW">Wrong 0 <span class="kbd">W</span></button>
+      </div>
+      <div class="row hidden" id="stealRow" style="margin-top:12px">
+        <span id="stealLabel" class="small"></span>
+        <button class="btn good" id="sYes">Stole it +1</button>
+        <button class="btn" id="sNo">No steal</button>
+      </div>
+      <div class="row hidden" id="nextRow" style="margin-top:12px">
+        <span class="small muted" id="resultLine"></span>
+        <span class="spacer"></span>
+        <button class="btn primary lg" id="bN">Next question <span class="kbd">N</span></button>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="screenBtn">Open contestant screen ↗</button>
+      <button class="btn ghost" id="revealBtn" title="Show the model answer on the contestant screen">Show answer on contestant screen</button>
+      <span class="spacer"></span>
+      <button class="btn ghost" id="skipBtn">Skip question</button>
+      <button class="btn ghost" id="endBtn">End game</button>
+    </div>
+  </section>
+
+  <!-- ===== Results ===== -->
+  <section id="results" class="hidden">
+    <h1 id="rTitle">Game over</h1>
+    <p class="sub" id="rSub"></p>
+    <div class="score-board" id="rBoard"></div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn primary" id="again">Play again</button>
+      <button class="btn" id="sendMissed">Add missed questions to Study mode</button>
+      <button class="btn ghost" id="toSetup">Change settings</button>
+    </div>
+    <h2>Question log</h2>
+    <div id="log"></div>
+  </section>
+</main>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+(function () {
+  const { EPS, store, shuffle, md, esc, topicName, topicShort, topicChips, navBar, toast } = App;
+  navBar('quizmaster.html');
+  const $ = id => document.getElementById(id);
+
+  // ---- sync with contestant screen (same browser: BroadcastChannel + storage fallback) ----
+  let chan = null;
+  try { chan = new BroadcastChannel('eps1000-quizmaster'); } catch (e) { chan = null; }
+  function publish(state) {
+    store.set('qm-live', state);
+    if (chan) { try { chan.postMessage(state); } catch (e) { /* ignore */ } }
+  }
+  if (chan) chan.onmessage = ev => { if (ev.data && ev.data.type === 'hello') publish(liveState()); };
+
+  // ---- setup ----
+  let nPlayers = 1, selected = EPS.topics.map(t => t.id);
+  const saved = store.get('qm-opts', null);
+  if (saved) {
+    nPlayers = saved.nPlayers || 1; $('p1').value = saved.p1 || 'Me'; $('p2').value = saved.p2 || 'Friend';
+    $('nq').value = saved.nq || '15'; $('timer').value = saved.timer || '60'; $('steal').value = saved.steal || 'on';
+  }
+  function paintMode() {
+    document.querySelectorAll('#modeChips .chip').forEach(c => c.classList.toggle('on', +c.dataset.n === nPlayers));
+    $('p2wrap').classList.toggle('hidden', nPlayers === 1);
+    $('stealWrap').classList.toggle('hidden', nPlayers === 1);
+  }
+  document.querySelectorAll('#modeChips .chip').forEach(c => c.onclick = () => { nPlayers = +c.dataset.n; paintMode(); });
+  paintMode();
+  topicChips($('chips'), 'qm-topics', sel => { selected = sel; updateCount(); });
+  selected = store.get('qm-topics', selected); if (!selected.length) selected = EPS.topics.map(t => t.id);
+  function pool() { return EPS.questions.filter(q => selected.includes(q.topic)); }
+  function updateCount() { const n = pool().length; $('count').textContent = n + ' questions available'; $('start').disabled = n === 0; }
+  updateCount();
+
+  // ---- game state ----
+  let G = null; // { players:[{name,score}], qs:[], i, turn, phase:'ask'|'steal'|'done', log:[], timerLeft, timerOn, revealed }
+  let tick = null;
+
+  function liveState() {
+    if (!G) return { type: 'state', phase: 'idle' };
+    const q = G.qs[G.i];
+    return {
+      type: 'state', phase: G.phase, i: G.i, n: G.qs.length,
+      players: G.players, turn: G.turn, steal: G.phase === 'steal' ? 1 - G.turn : null,
+      q: q ? q.q : '', topic: q ? topicName(q.topic) : '',
+      answer: G.revealed && q ? q.a : null,
+      timer: G.timerTotal ? G.timerLeft : null, finished: G.finished || false
+    };
+  }
+
+  function start() {
+    store.set('qm-opts', { nPlayers, p1: $('p1').value, p2: $('p2').value, nq: $('nq').value, timer: $('timer').value, steal: $('steal').value });
+    let qs = shuffle(pool());
+    if ($('nq').value !== 'all') qs = qs.slice(0, +$('nq').value);
+    const players = [{ name: $('p1').value.trim() || 'Player 1', score: 0 }];
+    if (nPlayers === 2) players.push({ name: $('p2').value.trim() || 'Player 2', score: 0 });
+    G = { players, qs, i: 0, turn: 0, phase: 'ask', log: [], timerTotal: +$('timer').value, timerLeft: 0, timerOn: false, revealed: false, finished: false };
+    show('game'); renderQ();
+  }
+
+  function show(v) { ['setup', 'game', 'results'].forEach(id => $(id).classList.toggle('hidden', id !== v)); window.scrollTo(0, 0); }
+
+  function renderBoard(el, final) {
+    const max = Math.max(...G.players.map(p => p.score));
+    el.innerHTML = G.players.map((p, k) => `
+      <div class="player ${!final && (G.phase === 'steal' ? k !== G.turn : k === G.turn) && G.players.length > 1 ? 'turn' : ''}">
+        <div class="name">${esc(p.name)}${final && G.players.length > 1 && p.score === max ? ' 🏆' : ''}</div>
+        <div class="pts">${fmt(p.score)}</div>
+        <div class="small muted">points</div>
+      </div>`).join('');
+  }
+  const fmt = n => (Math.round(n * 2) / 2).toString().replace('.5', '½').replace(/^0½/, '½');
+
+  function renderQ() {
+    const q = G.qs[G.i];
+    G.phase = 'ask'; G.revealed = false;
+    if (G.players.length === 2) G.turn = G.i % 2;
+    $('gTopic').textContent = topicShort(q.topic); $('gTopic').title = topicName(q.topic);
+    $('gPos').textContent = 'Question ' + (G.i + 1) + ' of ' + G.qs.length;
+    $('gBar').style.width = (100 * G.i / G.qs.length) + '%';
+    $('gQ').innerHTML = md(q.q);
+    $('gA').innerHTML = md(q.a);
+    $('gK').innerHTML = q.keys.map(k => `<span class="kw">${esc(k.split('|')[0])}</span>`).join('');
+    const who = G.players[G.turn].name;
+    $('turnLine').textContent = G.players.length > 1 ? `${who}'s turn. Host: read this out loud.` : 'Host: read this out loud.';
+    $('gradeFor').textContent = 'How did ' + who + ' do?';
+    ['bC', 'bP', 'bW'].forEach(id => $(id).disabled = false);
+    $('stealRow').classList.add('hidden'); $('nextRow').classList.add('hidden');
+    renderBoard($('board'));
+    startTimer();
+    publish(liveState());
+  }
+
+  function startTimer() {
+    clearInterval(tick);
+    if (!G.timerTotal) { $('gTimer').textContent = 'no timer'; $('gTimer').classList.remove('low'); return; }
+    G.timerLeft = G.timerTotal; G.timerOn = true; paintTimer();
+    tick = setInterval(() => {
+      if (!G.timerOn) return;
+      G.timerLeft = Math.max(0, G.timerLeft - 1); paintTimer();
+      publish(liveState());
+      if (G.timerLeft === 0) { G.timerOn = false; toast("⏰ Time's up!"); }
+    }, 1000);
+  }
+  function paintTimer() {
+    if (!G.timerTotal) return;
+    const m = Math.floor(G.timerLeft / 60), s = G.timerLeft % 60;
+    $('gTimer').textContent = (G.timerOn || G.timerLeft === 0 ? '' : '⏸ ') + m + ':' + String(s).padStart(2, '0');
+    $('gTimer').classList.toggle('low', G.timerLeft <= 10);
+  }
+
+  function grade(pts) {
+    if (!G || G.phase !== 'ask') return;
+    G.timerOn = false; paintTimer();
+    const q = G.qs[G.i], p = G.players[G.turn];
+    p.score += pts;
+    const entry = { q, who: p.name, pts, steal: null };
+    G.log.push(entry);
+    ['bC', 'bP', 'bW'].forEach(id => $(id).disabled = true);
+    const canSteal = G.players.length === 2 && $('steal').value === 'on' && pts < 1;
+    if (canSteal) {
+      G.phase = 'steal';
+      $('stealLabel').textContent = G.players[1 - G.turn].name + ', want to steal? ';
+      $('stealRow').classList.remove('hidden');
+      renderBoard($('board'));
+    } else {
+      finishQ(pts === 1 ? `✓ ${p.name} got it.` : pts > 0 ? `◐ ${p.name} partly got it.` : `✗ ${p.name} missed it.`);
+    }
+    publish(liveState());
+  }
+  function stealResult(ok) {
+    if (G.phase !== 'steal') return;
+    const other = G.players[1 - G.turn];
+    const entry = G.log[G.log.length - 1];
+    entry.steal = { who: other.name, ok };
+    if (ok) other.score += 1;
+    $('stealRow').classList.add('hidden');
+    finishQ(ok ? `🔁 ${other.name} stole it!` : 'No steal.');
+  }
+  function finishQ(msg) {
+    G.phase = 'done'; G.revealed = true;
+    $('resultLine').textContent = msg;
+    $('nextRow').classList.remove('hidden');
+    renderBoard($('board'));
+    publish(liveState());
+    $('bN').focus();
+  }
+  function next() {
+    if (G.phase !== 'done') return;
+    G.i++;
+    if (G.i >= G.qs.length) return endGame();
+    renderQ();
+  }
+  function endGame() {
+    clearInterval(tick);
+    G.finished = true; G.phase = 'done';
+    const ps = G.players;
+    if (ps.length === 1) {
+      const pct = Math.round(100 * ps[0].score / Math.max(G.log.length, 1));
+      $('rTitle').textContent = `${fmt(ps[0].score)} / ${G.log.length} (${pct}%)`;
+      $('rSub').textContent = pct >= 90 ? 'Exam-ready. Keep it sharp with a shuffled run tomorrow.' : pct >= 70 ? 'Solid. Review the misses below, then play again.' : 'Keep going. Read the answers below, then retry these topics in Study mode.';
+    } else {
+      const [a, b] = ps;
+      $('rTitle').textContent = a.score === b.score ? "It's a tie!" : (a.score > b.score ? a.name : b.name) + ' wins!';
+      $('rSub').textContent = `${a.name} ${fmt(a.score)} · ${b.name} ${fmt(b.score)} · ${G.log.length} questions`;
+    }
+    renderBoard($('rBoard'), true);
+    $('log').innerHTML = G.log.map((e, k) => `
+      <div class="card" style="margin-bottom:10px">
+        <div class="row between"><span class="tag accent">${esc(topicShort(e.q.topic))}</span>
+        <span class="tag">${esc(e.who)}: ${e.pts === 1 ? '✓ correct' : e.pts > 0 ? '◐ partly' : '✗ missed'}${e.steal ? (e.steal.ok ? ` · stolen by ${esc(e.steal.who)}` : '') : ''}</span></div>
+        <h3>${k + 1}. ${md(e.q.q).replace(/^<p>|<\/p>$/g, '')}</h3>
+        <details><summary class="small muted">Model answer</summary><div class="answer">${md(e.q.a)}</div></details>
+      </div>`).join('');
+    show('results');
+    publish(liveState());
+  }
+
+  // ---- buttons & keys ----
+  $('start').onclick = start;
+  $('bC').onclick = () => grade(1);
+  $('bP').onclick = () => grade(0.5);
+  $('bW').onclick = () => grade(0);
+  $('sYes').onclick = () => stealResult(true);
+  $('sNo').onclick = () => stealResult(false);
+  $('bN').onclick = next;
+  $('skipBtn').onclick = () => {
+    if (!G) return;
+    if (G.phase === 'steal') { toast('Finish the steal first'); return; }
+    G.qs.splice(G.i, 1);
+    if (G.i >= G.qs.length) endGame(); else renderQ();
+  };
+  $('endBtn').onclick = () => { if (G && confirm('End the game now?')) endGame(); };
+  $('again').onclick = start;
+  $('toSetup').onclick = () => { G = null; clearInterval(tick); show('setup'); publish(liveState()); };
+  $('hideBtn').onclick = () => {
+    const hid = $('hostAnswer').classList.toggle('hidden');
+    $('hideBtn').firstChild.textContent = hid ? 'Show ' : 'Hide ';
+  };
+  $('revealBtn').onclick = () => { if (!G) return; G.revealed = true; publish(liveState()); toast('Answer shown on contestant screen'); };
+  $('screenBtn').onclick = () => {
+    const w = window.open('contestant.html', 'eps1000-contestant', 'width=1100,height=750');
+    if (!w) toast('Pop-up blocked. Open contestant.html in another tab or window.');
+    setTimeout(() => publish(liveState()), 600);
+  };
+  $('sendMissed').onclick = () => {
+    if (!G) return;
+    const prog = store.get('study-progress', {});
+    let n = 0;
+    G.log.forEach(e => {
+      if (e.pts < 1 && !(prog[e.q.id] && prog[e.q.id].s === 'got')) { prog[e.q.id] = { s: e.pts > 0 ? 'partial' : 'missed', n: (prog[e.q.id] ? prog[e.q.id].n : 0) + 1, t: Date.now() }; n++; }
+    });
+    store.set('study-progress', prog);
+    toast(n ? `${n} question${n === 1 ? '' : 's'} marked for review in Study mode` : 'Nothing to add. You got them all!');
+  };
+
+  document.addEventListener('keydown', e => {
+    if ($('game').classList.contains('hidden')) return;
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+    const k = e.key.toLowerCase();
+    if (k === 'c') grade(1);
+    else if (k === 'p') grade(0.5);
+    else if (k === 'w') grade(0);
+    else if (k === 'n' || (k === 'enter' && G && G.phase === 'done')) { e.preventDefault(); next(); }
+    else if (k === 'h') $('hideBtn').click();
+    else if (k === 't' && G && G.timerTotal && G.phase === 'ask') { G.timerOn = !G.timerOn && G.timerLeft > 0; paintTimer(); publish(liveState()); }
+    else if (k === 'y' && G && G.phase === 'steal') stealResult(true);
+  });
+
+  publish(liveState());
+})();
+</script>
+</body>
+</html>
