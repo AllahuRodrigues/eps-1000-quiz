@@ -124,10 +124,8 @@
 
   function navBar(active) {
     const links = [
-      ['index.html', 'Home'],
-      ['flashcards.html', 'Flashcards'],
-      ['study.html', 'Study & Progress'],
-      ['quizmaster.html', 'Quizmaster'],
+      ['index.html', 'Master Deck'],
+      ['quizmaster.html', 'Quizmaster (friend asks)'],
       ['guide.html', 'Study Guide']
     ];
     const bar = document.createElement('header');

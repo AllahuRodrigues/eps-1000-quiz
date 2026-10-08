@@ -3,91 +3,299 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EPS 1000 Midterm Prep</title>
+<title>EPS 1000 Midterm Deck</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  .mode { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: inherit; transition: transform .1s ease, border-color .15s ease; }
-  .mode:hover { transform: translateY(-2px); border-color: var(--accent); }
-  .mode .icon { font-size: 28px; }
-  .mode h2 { margin: 0; }
-  .mode p { margin: 0; color: var(--ink-2); font-size: 14px; }
-  .facts td { padding: 6px 10px 6px 0; vertical-align: top; font-size: 14px; }
-  .facts td:first-child { font-weight: 700; white-space: nowrap; color: var(--ink-2); }
+  .app { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 22px; max-width: 1280px; margin: 0 auto; padding: 18px 16px 80px; }
+  .side { position: sticky; top: 66px; align-self: start; max-height: calc(100vh - 84px); overflow: auto; padding-right: 4px; }
+  .side h2 { font-size: 15px; margin: 0 0 6px; }
+  .tlist { list-style: none; margin: 8px 0 0; padding: 0; }
+  .tlist li { margin: 0; }
+  .tbtn { width: 100%; text-align: left; border: 1px solid transparent; background: none; border-radius: 10px; padding: 7px 9px; cursor: pointer; display: grid; grid-template-columns: 14px minmax(0,1fr) auto; gap: 8px; align-items: center; font-size: 14px; color: var(--ink); }
+  .tbtn:hover { background: var(--surface-2); }
+  .tbtn.on { background: var(--accent-soft); border-color: var(--accent); }
+  .tbtn .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .tbtn .dot.done { background: var(--good); }
+  .tbtn .dot.some { background: var(--mid); }
+  .tbtn .n { font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .tbtn .bar { grid-column: 2 / 4; height: 4px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .tbtn .bar > span { display: block; height: 100%; background: var(--good); }
+  .kp { margin: 10px 0 0; padding: 12px 14px 12px 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; font-size: 13.5px; line-height: 1.5; }
+  .kp li { margin: 4px 0; }
+  .kp-head { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+  .linkbtn { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 13px; padding: 0; }
+  .qcard { min-height: 300px; }
+  .prompt { font-size: 23px; font-weight: 650; line-height: 1.32; margin: 6px 0 4px; }
+  .prompt p { margin: 0; }
+  .flipzone { cursor: pointer; border: 2px dashed var(--line); border-radius: 14px; padding: 18px; text-align: center; color: var(--ink-2); margin-top: 14px; }
+  .flipzone:hover { border-color: var(--accent); color: var(--ink); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .seg button { border: none; background: var(--surface); padding: 8px 12px; cursor: pointer; font-weight: 600; font-size: 14px; color: var(--ink-2); }
+  .seg button.on { background: var(--accent); color: var(--accent-ink); }
+  .toggle { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; color: var(--ink-2); cursor: pointer; user-select: none; }
+  .toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
+  .big-stat { font-size: 30px; font-weight: 800; line-height: 1; }
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .side { position: static; max-height: none; }
+    .app > main { order: -1; }
+    .prompt { font-size: 19px; }
+  }
 </style>
 </head>
 <body>
-<main class="wrap">
-  <h1>EPS 1000 · Natural Disasters: Midterm 1</h1>
-  <p class="sub">Everything from the lectures, slides, key points, transcripts, homeworks and readings for Lectures 1–14, in four ways to study.</p>
+<div class="app">
 
-  <div class="card" style="margin-bottom:14px">
-    <div class="row between"><b>Your progress</b><span class="small muted" id="countdown"></span></div>
-    <div class="progress" style="margin:10px 0 6px; height:14px"><span class="p-good" id="pGot"></span><span class="p-mid" id="pPart"></span><span class="p-bad" id="pMiss"></span></div>
-    <div class="small muted" id="pText"></div>
-  </div>
+  <!-- ===== LEFT: content bullets ===== -->
+  <aside class="side" aria-label="Course content">
+    <div class="card" style="padding:14px">
+      <div class="row between"><h2>Midterm 1 Master Deck</h2><span class="tag accent" id="pct">0%</span></div>
+      <div class="progress" style="height:12px; margin:8px 0 6px"><span class="p-good" id="oGot"></span><span class="p-mid" id="oPart"></span><span class="p-bad" id="oMiss"></span></div>
+      <div class="small muted" id="oText"></div>
+      <div class="small muted" id="countdown" style="margin-top:4px"></div>
+    </div>
 
-  <div class="grid cols-2">
-    <a class="card mode" href="study.html">
-      <span class="icon">📈</span><h2>Study &amp; Progress</h2>
-      <p>Go through every exam question. Type your answer, reveal the model answer, and grade yourself. A progress bar tracks mastery overall and by topic, and missed questions repeat until you get them.</p>
-    </a>
-    <a class="card mode" href="flashcards.html">
-      <span class="icon">🃏</span><h2>Flashcards</h2>
-      <p>Flip-card decks of terms, facts and exam questions. Mark "Know it" or "Still learning," filter by topic, shuffle. Keyboard shortcuts included.</p>
-    </a>
-    <a class="card mode" href="quizmaster.html">
-      <span class="icon">🎤</span><h2>Quizmaster (1 or 2 players)</h2>
-      <p>A friend hosts: they see the question <i>and</i> the model answer, ask you out loud, and score you. Play solo or head-to-head with steals and a timer. Has an optional contestant screen.</p>
-    </a>
-    <a class="card mode" href="guide.html">
-      <span class="icon">📘</span><h2>Master Study Guide</h2>
-      <p>The full written guide: every unit explained, comparison tables, famous examples, HW solutions (including HW4), two practice midterms, a cheat sheet, and every question with answers.</p>
-    </a>
-  </div>
+    <ul class="tlist" id="tlist"></ul>
 
-  <div class="card" style="margin-top:14px">
-    <h2 style="margin-top:0">Exam facts</h2>
-    <table class="facts">
-      <tr><td>When</td><td>Monday, October 12, usual class time and room (50 min)</td></tr>
-      <tr><td>Covers</td><td>All lectures through Wed Oct 7 (energy → physics → mobile Earth → plate tectonics → mantle → earthquakes → volcanoes)</td></tr>
-      <tr><td>Format</td><td>Conceptual short-answer. <b>No math, no formulas, no dates or names to memorize.</b> Explain the <i>why</i>.</td></tr>
-      <tr><td>Source</td><td>The key-points slides. Turn every key point into a question and explain it out loud.</td></tr>
-      <tr><td>Never write</td><td>"The mantle is liquid." It's solid rock that flows.</td></tr>
-    </table>
-  </div>
+    <div class="kp-head">
+      <h2 id="kpTitle">Key points</h2>
+      <button class="linkbtn" id="kpToggle">Hide</button>
+    </div>
+    <ul class="kp" id="kp"></ul>
+  </aside>
 
-  <div class="card" style="margin-top:14px">
-    <h2 style="margin-top:0">Suggested plan</h2>
-    <ol class="small" style="margin:0; padding-left:18px; line-height:1.7">
-      <li>Read the <a href="guide.html">Study Guide</a> unit by unit (sections 1–6).</li>
-      <li><a href="study.html">Study mode</a> in <b>lecture order</b>: answer every question once.</li>
-      <li><a href="flashcards.html">Flashcards</a> for terms you hesitate on.</li>
-      <li><a href="quizmaster.html">Quizmaster</a> with a friend: say answers out loud, the way Prof. Long suggests.</li>
-      <li>Night before: Study mode <b>shuffled</b>, practice midterms A and B, and the cheat sheet (section 12).</li>
-    </ol>
-  </div>
-  <p class="small muted center" style="margin-top:18px" id="bankInfo"></p>
-</main>
+  <!-- ===== RIGHT: the deck ===== -->
+  <main>
+    <div class="row between" style="margin-bottom:10px">
+      <div class="seg" role="tablist" aria-label="Study style">
+        <button id="mQuiz" class="on" title="Type or say your answer, then reveal">✍️ Quiz me</button>
+        <button id="mFlash" title="Flip-card style">🃏 Flashcards</button>
+      </div>
+      <div class="row" style="gap:16px">
+        <label class="toggle"><input type="checkbox" id="optLeft" checked> Only what I haven't mastered</label>
+        <label class="toggle"><input type="checkbox" id="optShuffle"> Shuffle</label>
+      </div>
+    </div>
+
+    <div class="row between small" style="margin-bottom:4px"><span id="scopeLabel"></span><span id="posLabel"></span></div>
+    <div class="progress" style="margin-bottom:16px"><span class="p-good" id="sGot"></span><span class="p-mid" id="sPart"></span><span class="p-bad" id="sMiss"></span></div>
+
+    <section class="card qcard" id="cardBox">
+      <div class="row between">
+        <span class="tag accent" id="cTopic"></span>
+        <span class="tag" id="cKind"></span>
+      </div>
+      <div class="prompt" id="cPrompt"></div>
+
+      <div id="quizInput">
+        <label class="field" style="margin-top:14px">Your answer (type it or say it out loud)
+          <textarea id="ans" placeholder="Explain it like on the exam: the answer, then WHY (the mechanism), plus an example."></textarea>
+        </label>
+        <div class="row" style="margin-top:10px">
+          <button class="btn primary lg" id="reveal">Show answer <span class="kbd">⌘/Ctrl+Enter</span></button>
+          <button class="btn ghost" id="skip">Skip →</button>
+        </div>
+      </div>
+      <div id="flipInput" class="flipzone hidden">Click here or press <b>Space</b> to flip the card</div>
+
+      <div id="answerBox" class="hidden" style="margin-top:16px">
+        <div class="host-only" style="background:var(--surface-2); border-color:var(--line)">
+          <div class="label" style="color:var(--ink-2)">Answer</div>
+          <div class="answer" id="cAnswer" style="margin-top:6px"></div>
+        </div>
+        <div id="kwWrap" style="margin-top:10px">
+          <div class="small muted" id="kwLabel"></div>
+          <div id="kws" style="margin-top:4px"></div>
+        </div>
+        <div class="small muted" style="margin-top:14px">Be honest. "Got it" means you'd earn full credit on the exam.</div>
+        <div class="row" style="margin-top:8px">
+          <button class="btn good lg" id="gGot">Got it <span class="kbd">1</span></button>
+          <button class="btn mid lg" id="gPart">Partly <span class="kbd">2</span></button>
+          <button class="btn bad lg" id="gMiss">Missed <span class="kbd">3</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card center hidden" id="doneBox">
+      <div style="font-size:44px">🎉</div>
+      <h2 style="margin:6px 0" id="doneTitle">Mastered!</h2>
+      <p class="muted" id="doneText"></p>
+      <div class="row" style="justify-content:center">
+        <button class="btn primary" id="doneAll">Study the whole deck</button>
+        <button class="btn" id="doneReview">Review everything again (shuffled)</button>
+      </div>
+    </section>
+
+    <p class="kbd-help" style="margin-top:12px">
+      <kbd>⌘/Ctrl</kbd>+<kbd>Enter</kbd> show answer · <kbd>Space</kbd> flip (flashcards) · <kbd>1</kbd> got it · <kbd>2</kbd> partly · <kbd>3</kbd> missed · <kbd>→</kbd> skip.
+      Missed cards come back a few cards later. Progress saves automatically.
+      <button class="linkbtn" id="resetAll" style="margin-left:8px">Reset progress</button>
+    </p>
+  </main>
+</div>
+
 <script src="data.js"></script>
 <script src="common.js"></script>
 <script>
 (function () {
-  const { EPS, store, navBar } = App;
+  const { EPS, store, shuffle, md, esc, keyHits, topicName, navBar, toast } = App;
   navBar('index.html');
-  const prog = store.get('study-progress', {});
-  const n = EPS.questions.length;
-  const c = { got: 0, partial: 0, missed: 0 };
-  EPS.questions.forEach(q => { const s = prog[q.id] && prog[q.id].s; if (s) c[s]++; });
-  const pct = x => (100 * x / Math.max(n, 1)) + '%';
-  document.getElementById('pGot').style.width = pct(c.got);
-  document.getElementById('pPart').style.width = pct(c.partial);
-  document.getElementById('pMiss').style.width = pct(c.missed);
-  document.getElementById('pText').textContent = `${c.got} of ${n} questions mastered · ${c.partial} partly · ${c.missed} missed · ${n - c.got - c.partial - c.missed} not yet seen`;
-  document.getElementById('bankInfo').textContent = `${EPS.questions.length} exam questions · ${EPS.cards.length} flashcards · ${EPS.topics.length} topics`;
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const days = Math.round((new Date(2026, 9, 12) - today) / 86400000);
-  document.getElementById('countdown').textContent = days > 1 ? `${days} days until the midterm` : days === 1 ? 'Midterm is tomorrow. You got this!' : days === 0 ? 'Midterm day. Good luck!' : '';
+  const $ = id => document.getElementById(id);
+
+  // ---------- one unified deck: per topic, quick facts first, then exam questions ----------
+  const deck = [];
+  EPS.topics.forEach(t => {
+    EPS.cards.filter(c => c.topic === t.id).forEach(c => deck.push({ id: c.id, topic: t.id, kind: 'Quick fact', prompt: c.front, answer: c.back, keys: [] }));
+    EPS.questions.filter(q => q.topic === t.id).forEach(q => deck.push({ id: q.id, topic: t.id, kind: 'Explain (exam-style)', prompt: q.q, answer: q.a, keys: q.keys }));
+  });
+  const byId = Object.fromEntries(deck.map(d => [d.id, d]));
+
+  // ---------- state ----------
+  let prog = store.get('deck-progress', {});          // id -> 'got' | 'partial' | 'missed'
+  let st = Object.assign({ topic: 'all', mode: 'quiz', left: true, shuffle: false, kp: true }, store.get('deck-ui', {}));
+  let queue = [], cur = null, revealed = false;
+  const save = () => { store.set('deck-ui', st); };
+
+  // migrate marks from older study/flashcard pages, if any
+  (function migrate() {
+    const old = store.get('study-progress', null);
+    if (old) { Object.keys(old).forEach(id => { if (byId[id] && !prog[id]) prog[id] = old[id].s; }); store.remove('study-progress'); }
+    const fc = store.get('fc-marks', null);
+    if (fc) { Object.keys(fc).forEach(id => { if (byId[id] && !prog[id]) prog[id] = fc[id] === 'know' ? 'got' : 'partial'; }); store.remove('fc-marks'); }
+    store.set('deck-progress', prog);
+  })();
+
+  const inScope = d => st.topic === 'all' || d.topic === st.topic;
+  const scoped = () => deck.filter(inScope);
+  function counts(list) { const c = { got: 0, partial: 0, missed: 0, none: 0 }; list.forEach(d => c[prog[d.id] || 'none']++); return c; }
+  const pct = (n, d) => (d ? 100 * n / d : 0) + '%';
+
+  // ---------- sidebar ----------
+  function renderSide() {
+    const all = counts(deck);
+    $('oGot').style.width = pct(all.got, deck.length); $('oPart').style.width = pct(all.partial, deck.length); $('oMiss').style.width = pct(all.missed, deck.length);
+    $('pct').textContent = Math.round(100 * all.got / deck.length) + '% mastered';
+    $('oText').textContent = `${all.got} of ${deck.length} cards mastered · ${all.partial} partly · ${all.missed} missed`;
+    const items = [{ id: 'all', name: 'Everything (whole midterm)' }].concat(EPS.topics.map(t => ({ id: t.id, name: t.name })));
+    $('tlist').innerHTML = items.map(t => {
+      const list = t.id === 'all' ? deck : deck.filter(d => d.topic === t.id);
+      const c = counts(list);
+      const dot = c.got === list.length ? 'done' : (c.got + c.partial + c.missed) ? 'some' : '';
+      return `<li><button class="tbtn ${st.topic === t.id ? 'on' : ''}" data-id="${t.id}">
+        <span class="dot ${dot}"></span><span>${esc(t.name)}</span><span class="n">${c.got}/${list.length}</span>
+        <span class="bar"><span style="width:${pct(c.got, list.length)}"></span></span></button></li>`;
+    }).join('');
+    document.querySelectorAll('.tbtn').forEach(b => b.onclick = () => { st.topic = b.dataset.id; save(); build(); });
+    // key-point bullets for the selected topic (or all topics)
+    const tps = st.topic === 'all' ? EPS.topics : EPS.topics.filter(t => t.id === st.topic);
+    $('kpTitle').textContent = st.topic === 'all' ? 'Key points (all lectures)' : 'Key points · ' + tps[0].short;
+    $('kp').innerHTML = tps.map(t => (st.topic === 'all' ? `<li style="list-style:none; margin-left:-16px; font-weight:700; margin-top:8px">${esc(t.name)}</li>` : '') +
+      (EPS.keypoints[t.id] || []).map(k => `<li>${md(k).replace(/^<p>|<\/p>$/g, '')}</li>`).join('')).join('');
+    $('kp').classList.toggle('hidden', !st.kp);
+    $('kpToggle').textContent = st.kp ? 'Hide' : 'Show';
+    const now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const days = Math.round((new Date(2026, 9, 12) - today) / 86400000);
+    $('countdown').textContent = days > 1 ? `📅 ${days} days until the midterm (Mon Oct 12)` : days === 1 ? '📅 Midterm is tomorrow. You\'ve got this!' : days === 0 ? '📅 Midterm today. Good luck!' : '';
+  }
+
+  // ---------- queue ----------
+  function build() {
+    let list = scoped();
+    if (st.left) list = list.filter(d => prog[d.id] !== 'got');
+    if (st.shuffle) list = shuffle(list);
+    queue = list.map(d => d.id);
+    $('optLeft').checked = st.left; $('optShuffle').checked = st.shuffle;
+    $('mQuiz').classList.toggle('on', st.mode === 'quiz'); $('mFlash').classList.toggle('on', st.mode === 'flash');
+    renderSide(); next();
+  }
+
+  function next() {
+    cur = queue.length ? byId[queue[0]] : null;
+    revealed = false;
+    renderScopeBar();
+    if (!cur) { showDone(); return; }
+    $('doneBox').classList.add('hidden'); $('cardBox').classList.remove('hidden');
+    $('cTopic').textContent = topicName(cur.topic);
+    const s = prog[cur.id];
+    $('cKind').textContent = cur.kind + (s ? ({ got: ' · ✓ got it', partial: ' · ◐ partly before', missed: ' · ✗ missed before' }[s]) : '');
+    $('cPrompt').innerHTML = md(cur.prompt);
+    $('ans').value = '';
+    $('answerBox').classList.add('hidden');
+    $('quizInput').classList.toggle('hidden', st.mode !== 'quiz');
+    $('flipInput').classList.toggle('hidden', st.mode !== 'flash');
+    if (st.mode === 'quiz') setTimeout(() => $('ans').focus({ preventScroll: true }), 20);
+  }
+
+  function renderScopeBar() {
+    const list = scoped(), c = counts(list);
+    $('scopeLabel').textContent = (st.topic === 'all' ? 'Whole midterm' : topicName(st.topic)) + `: ${c.got} / ${list.length} mastered`;
+    $('posLabel').textContent = queue.length ? `${queue.length} card${queue.length === 1 ? '' : 's'} left in this round` : '';
+    $('sGot').style.width = pct(c.got, list.length); $('sPart').style.width = pct(c.partial, list.length); $('sMiss').style.width = pct(c.missed, list.length);
+  }
+
+  function reveal() {
+    if (!cur || revealed) return;
+    revealed = true;
+    $('ans').blur();
+    $('cAnswer').innerHTML = md(cur.answer);
+    const typed = $('ans').value.trim();
+    if (cur.keys.length) {
+      const hits = keyHits(typed, cur.keys), n = hits.filter(h => h.hit).length;
+      $('kwLabel').textContent = typed ? `Your answer hits ${n} of ${hits.length} key ideas (rough check; judge the reasoning yourself):` : 'Key ideas a full-credit answer mentions:';
+      $('kws').innerHTML = hits.map(h => `<span class="kw ${typed && h.hit ? 'hit' : ''}">${typed && h.hit ? '✓ ' : ''}${esc(h.key)}</span>`).join('');
+      $('kwWrap').classList.remove('hidden');
+    } else $('kwWrap').classList.add('hidden');
+    $('answerBox').classList.remove('hidden');
+    $('flipInput').classList.add('hidden');
+    $('answerBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function grade(s) {
+    if (!cur || !revealed) return;
+    prog[cur.id] = s; store.set('deck-progress', prog);
+    queue.shift();
+    if (s !== 'got') queue.splice(Math.min(queue.length, s === 'missed' ? 4 : 8), 0, cur.id); // comes back soon
+    renderSide(); next();
+  }
+
+  function showDone() {
+    $('cardBox').classList.add('hidden'); $('doneBox').classList.remove('hidden');
+    const list = scoped(), c = counts(list);
+    const allDone = c.got === list.length;
+    $('doneTitle').textContent = allDone ? (st.topic === 'all' ? 'Whole midterm mastered!' : 'Topic mastered!') : 'Round finished';
+    $('doneText').textContent = allDone
+      ? `You've marked all ${list.length} cards "Got it." Do one shuffled review the night before.`
+      : `${c.got} of ${list.length} mastered. Keep going.`;
+  }
+
+  // ---------- events ----------
+  $('reveal').onclick = reveal;
+  $('flipInput').onclick = reveal;
+  $('gGot').onclick = () => grade('got');
+  $('gPart').onclick = () => grade('partial');
+  $('gMiss').onclick = () => grade('missed');
+  $('skip').onclick = () => { if (queue.length > 1) { queue.push(queue.shift()); next(); } };
+  $('mQuiz').onclick = () => { st.mode = 'quiz'; save(); build(); };
+  $('mFlash').onclick = () => { st.mode = 'flash'; save(); build(); };
+  $('optLeft').onchange = e => { st.left = e.target.checked; save(); build(); };
+  $('optShuffle').onchange = e => { st.shuffle = e.target.checked; save(); build(); };
+  $('kpToggle').onclick = () => { st.kp = !st.kp; save(); renderSide(); };
+  $('doneAll').onclick = () => { st.topic = 'all'; save(); build(); };
+  $('doneReview').onclick = () => { st.left = false; st.shuffle = true; save(); build(); };
+  $('resetAll').onclick = () => { if (confirm('Erase all your progress on this deck?')) { prog = {}; store.set('deck-progress', prog); build(); toast('Progress reset'); } };
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); reveal(); return; }
+    if (document.activeElement === $('ans')) return;
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if (e.key === ' ' && !revealed) { e.preventDefault(); reveal(); }
+    else if (e.key === '1') grade('got');
+    else if (e.key === '2') grade('partial');
+    else if (e.key === '3') grade('missed');
+    else if (e.key === 'ArrowRight') $('skip').click();
+  });
+
+  build();
 })();
 </script>
 </body>

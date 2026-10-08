@@ -658,5 +658,232 @@ window.EPS = (function () {
     'The emoji shows a **steep-sided, cone-shaped stratovolcano**, the kind built by **viscous, explosive felsic** magma at subduction zones (Fuji, St. Helens). Hawaii is a **hotspot** with runny **mafic** lava that flows far and builds broad, gently sloping **shield volcanoes**. Wrong kind of volcano!',
     ['stratovolcano', 'steep', 'shield', 'mafic', 'felsic', 'hotspot']);
 
-  return { topics, cards, questions };
+  /* ======================= DEEP-DIVE: demos, polls, misconceptions, readings, HW concepts ======================= */
+  // L1–3
+  Q('energy', 'What are the three lines of evidence for the Big Bang, and what does each show?',
+    '- **Dark night sky** (Olbers\' paradox): if the universe were infinite and eternal, every line of sight would hit a star and the sky would glow. It\'s dark, so the universe is **finite in extent and age**.\n- **Galactic redshift** (Hubble, Doppler effect): light from almost all galaxies is shifted to longer wavelengths, so they are **moving away**: the universe is **expanding**.\n- **Cosmic microwave background**: the universe is **3 K, not 0 K**, leftover heat showing it was **hotter in the past** and has been cooling.',
+    ['dark', 'finite', 'redshift|doppler', 'expand', 'microwave|3 k|3k', 'cooling|hotter']);
+  Q('energy', 'Describe how the solar system and Earth formed, and how that formation left Earth hot inside.',
+    '~4.6 Gyr ago a **molecular cloud collapsed under gravity** (perhaps triggered by a supernova shock). Its **spin flattened it into a disk**; the dense hot center became the Sun (fusion above 10⁷ K). In the disk, dust clumped (electrostatically, then by gravity) into planetesimals and planets within ~100 Myr; rocky planets formed close in, gas giants farther out, and the solar wind blew away leftover gas. Earth **accreted** from colliding bodies whose **gravitational PE → KE → heat** on impact (**primordial heat**), and it **differentiated** as iron sank to form the core.',
+    ['collapse', 'gravit', 'disk', 'accret|collid', 'heat', 'core|differentiat']);
+  Q('energy', 'Where did the elements that make up Earth (Si, Mg, Fe, O, uranium) come from?',
+    'From earlier generations of **stars**. Stars fuse H → He and, in big hot stars (red supergiants), progressively heavier elements **up to iron** (O, C, Si, Mg, Fe), which releases energy. Fusion beyond iron **absorbs** energy, so elements **heavier than iron** (including uranium and thorium, the heat-producing radioactive elements) are made in **supernova explosions**.',
+    ['star', 'fusion', 'iron', 'supernova', 'heavier']);
+  Q('energy', 'Why do our eyes see visible light, and why does it matter that Earth radiates infrared?',
+    'The Sun emits most of its energy in the **visible** part of the spectrum, so animals **evolved eyes sensitive to the light that is most available**. Earth, being much cooler, re-radiates energy as **infrared**. That outgoing infrared is what greenhouse gases absorb (the greenhouse effect, covered later), which controls Earth\'s surface temperature.',
+    ['visible', 'evolv', 'infrared', 'greenhouse']);
+  // L4
+  Q('mobile', 'Is the mantle convecting fast or slow? Put its speed in everyday terms, and explain why that slow speed still matters for disasters.',
+    'Very slow: **~1–10 cm/yr, about as fast as your fingernails grow** (HW2 estimates of plate speeds: ~4–13 cm/yr). But over millions of years it moves plates thousands of km, and because faults lock, years to centuries of that slow motion can be released **in seconds** during an earthquake (e.g., ~5 m of stored slip after 100 years at 5 cm/yr).',
+    ['cm', 'fingernail', 'million', 'lock|stored|released', 'earthquake']);
+  // L5–6
+  Q('plates', 'What is the difference between Earth\'s compositional layers and its mechanical (strength) layers?',
+    '- **Compositional (chemical)**: **crust** (continental felsic / oceanic mafic), **mantle** (silicate rock, ~80% of volume), **core** (iron: liquid outer core, solid inner core).\n- **Mechanical (how it deforms)**: **lithosphere** (crust + uppermost mantle; cold, strong, rigid plates that break brittlely), **asthenosphere** (weaker, solid mantle that flows), deeper mantle (solid, convecting, more viscous), liquid outer core, solid inner core.\nThe plate boundary is a **mechanical** layer boundary (lithosphere), not the crust–mantle boundary.',
+    ['crust', 'mantle', 'core', 'lithosphere', 'asthenosphere', 'strength|mechanical']);
+  Q('plates', 'Why does the fit of the continents work best at the ~1,800 m depth contour rather than the coastline?',
+    'The **coastline** depends on sea level, which changes. The ~1,800 m contour marks the edge of the **continental shelf**, the true **boundary between low-density continental crust and denser oceanic crust**. Matching continents along that boundary (e.g., South America and Africa) gives an astonishingly good fit, showing they were once joined.',
+    ['continental shelf|shelf', 'boundary', 'continental crust', 'oceanic', 'sea level']);
+  Q('plates', 'What did post-WWII seafloor surveys discover, and how did plate tectonics explain each feature?',
+    '- **Mid-ocean ridges** (65,000+ km of undersea mountains): **spreading centers** that sit high because young lithosphere is hot.\n- **Deep trenches** (>11 km, Mariana): where plates **subduct**.\n- **Fracture zones**: **transform faults** offsetting ridge segments (inactive extensions beyond).\n- **Magnetic stripes**: symmetric records of field reversals: **seafloor spreading**.',
+    ['ridge', 'trench', 'fracture|transform', 'magnetic', 'spreading', 'subduct']);
+  Q('plates', 'Why were global seismic networks built in the 1960s, and how did they help discover plate tectonics?',
+    'Not to study earthquakes: they were built during the **Cold War to detect nuclear weapons tests**. As a by-product they gave **accurate earthquake locations and depths**, showing earthquakes concentrated in **narrow belts outlining plate boundaries** and **deep earthquakes along dipping slabs**, key evidence for plate tectonics.',
+    ['nuclear', 'cold war|test', 'location|accurate', 'boundar', 'deep']);
+  Q('plates', 'Explain East Rock (New Haven) and the Meriden pillow basalts in terms of plate tectonics.',
+    'Both formed **~200 Myr ago during the breakup of Pangaea**, when North America rifted away from Africa (a **divergent** setting; the Hartford rift basin). **East Rock** is a **magma sill** (intrusive igneous rock) from that rifting; the **pillow basalts behind the Meriden Target** are lavas that erupted **underwater**, like those at mid-ocean ridges. The seafloor off New England is among the **oldest** (~200 Myr) because that margin formed then.',
+    ['pangaea', '200', 'rift|divergent|breakup', 'sill|intrusive', 'pillow|underwater']);
+  Q('plates', 'How did the continents move from Pangaea to today?',
+    '~220 Myr ago **Pangaea** covered ~40% of Earth, surrounded by the ocean **Panthalassa**. By ~180 Myr it split into **Laurasia** (north) and **Gondwana** (south). ~135 Myr: the North Atlantic opened and India headed toward Asia. ~65 Myr: the South Atlantic opened; Africa met Europe. Today: India has collided with Asia (**Himalaya**). The **Atlantic is growing** (spreading) and the **Pacific is shrinking** (subduction). Reconstructed with paleomagnetism, seafloor ages and continental fit.',
+    ['pangaea', 'laurasia|gondwana', 'atlantic', 'pacific', 'india|himalaya']);
+  Q('plates', 'Reading (Sevigny, on Tanya Atwater): how did magnetic data reveal the history of the San Andreas Fault?',
+    'Offshore California the magnetic stripes were **one-sided**: the eastern half was missing. Atwater realized the **Farallon plate** (the other side of the spreading ridge) had **subducted beneath North America**, taking that half of the pattern with it. Once the Farallon was consumed, the **Pacific plate** touched North America and the boundary became a **transform (San Andreas)**, only ~23 Myr old. It showed plate tectonics explains California\'s earthquakes, mountains and volcanoes.',
+    ['farallon', 'subduct', 'stripes|magnetic', 'transform', 'pacific']);
+  Q('plates', 'Class poll: Vine and Matthews used magnetic observations in the oceans to discover what? Why was it so important?',
+    '**Seafloor spreading.** The symmetric, reversing magnetic stripes parallel to ridges showed new crust forms at ridges and moves away on both sides. Once seafloor spreading was accepted, it supplied the **mechanism Wegener lacked** (continents ride on moving plates), and plate tectonics followed: the "smoking gun."',
+    ['seafloor spreading|spreading', 'symmetric|stripe', 'ridge', 'mechanism']);
+  // L7
+  Q('mantle', 'Describe the corn-syrup demo and the peanut-butter poll. What concept do they illustrate?',
+    'Prof. Long dropped rocks into **water** and **corn syrup**: they fell much faster in water. A rock in **peanut butter (~250 Pa·s, the poll answer)** would sink slower still, but it **still sinks** because it\'s denser. The concept: the **sinking speed depends on viscosity**, since viscous drag balances gravity at a terminal velocity. The same physics governs **cold slabs sinking through the very viscous mantle (~10²¹ Pa·s)**, slowly but inevitably.',
+    ['water', 'syrup', 'viscosity', 'drag|resist', 'slab|mantle', 'denser|sink']);
+  Q('mantle', 'How is viscosity measured in a lab (the two-plate idea), and why are the units Pa·s?',
+    'Put a fluid layer between two plates, fix the bottom one, and push the top plate at a steady speed. The **force needed per unit area** to keep it moving at a given speed (for a given gap) is larger for a stickier fluid: F = μ·A·u/y, so μ = (F/A)·(y/u). Force per area is a **pressure (pascal)**, and y/u is a **time (seconds)**, so viscosity is in **pascal-seconds**.',
+    ['force', 'area', 'pressure|pascal', 'second', 'plate']);
+  Q('mantle', 'Why are tectonic plates rigid even though they are made of the same kind of rock as the flowing mantle beneath?',
+    'Because mantle rheology is **temperature-dependent**. The lithosphere is **cold** (it sits at the surface, losing heat), so the same rock becomes extremely stiff, behaves **elastically/brittlely**, and breaks in earthquakes instead of flowing. Deeper, **hotter** mantle has lower viscosity and flows. "Slow as molasses in winter": cold syrup barely moves, warm syrup pours.',
+    ['temperature', 'cold', 'stiff|rigid|strong', 'hot', 'flow', 'molasses']);
+  Q('mantle', 'HW2 (conceptual): If the mantle was hotter in the past, would plate tectonics have been faster or slower? Why?',
+    '**Faster.** Hotter mantle has **lower viscosity**, so the viscous drag on a sinking slab is smaller and the slab reaches a **higher terminal velocity** (sinking speed ∝ density difference ÷ viscosity). Faster-sinking slabs pull plates faster, and convection overall is more vigorous.',
+    ['faster', 'lower viscosity|less viscous', 'drag', 'slab']);
+  // L8–9
+  Q('faults', 'Why were the first global seismic networks and the oldest seismoscope both about direction and location?',
+    'The Chinese **seismoscope (~132 CE)** had dragons holding balls above frogs; the ball that dropped showed the **direction** the shaking came from. Modern networks, three-component seismometers recording vertical, N–S and E–W motion at many stations, let us **locate** earthquakes precisely using wave arrival times. Location (with depth) and size are the two basic things we need to know about any earthquake.',
+    ['direction', 'seismoscope|dragon|frog', 'locat', 'three|3|component', 'station']);
+  Q('waves', 'On a seismogram from a distant earthquake, why does the P wave show up mostly on the vertical component and the S wave on the horizontal components?',
+    'Waves from a distant quake travel **deep through the Earth** (where speeds are faster) and arrive **nearly vertically** from beneath the station. P-wave motion is **parallel** to the travel direction, so it appears as **up-and-down** motion. S-wave motion is **perpendicular** to the travel direction, so it appears as **horizontal** motion.',
+    ['vertical', 'deep|beneath|below', 'parallel', 'perpendicular', 'horizontal']);
+  Q('waves', 'Why do P and S waves travel faster when they go to more distant stations?',
+    'Waves to distant stations **dive deeper into the mantle**, where rock is **stiffer** relative to its density, so seismic speeds are higher (P ~5 km/s in crust → ~8 km/s at the top of the mantle and faster deeper), before coming back up. The average speed along the path increases with distance, which is why travel-time curves bend.',
+    ['deep|dive', 'mantle', 'faster|speed', 'stiff']);
+  Q('waves', 'HW3: wave speed ≈ √(stiffness/density). Explain why this makes intuitive sense, and why sound is much faster in rock than in air.',
+    'A **stiffer** material snaps back harder when deformed, so the disturbance is passed on faster: speed goes **up** with stiffness. A **denser** material has more inertia (harder to accelerate, like a box of lead vs. pencils), so speed goes **down** with density. Rock is enormously stiffer than air, much more than it is denser, so sound/P waves travel ~8 km/s in mantle rock vs. ~340 m/s in air.',
+    ['stiff', 'dens', 'inertia|accelerat', 'faster|speed']);
+  // L9–10
+  Q('size', 'Class poll: what is the largest earthquake expected in the Cascadia subduction zone, and how do we know such a size is possible?',
+    '**M9.0–9.2** (most of the class guessed 8.1–8.9). Subduction zones are the only boundaries with fault contacts long and wide enough for M9s; Cascadia\'s locked megathrust is ~1,000 km long. Geologic evidence shows it produced an **M~9 in 1700** (Japanese "orphan tsunami" records, ghost forests) and ~41 large quakes in 10,000 years. Sumatra 2004 taught that an M9 can happen at almost any subduction zone.',
+    ['9', 'subduction', 'locked|long', '1700|orphan|ghost', 'evidence']);
+  Q('size', 'How does an earthquake early-warning system work, and why does it only give seconds to a minute of warning?',
+    'It detects the fast but weak **P wave** near the source and immediately estimates the quake\'s size and location, then sends an alert that travels at the speed of electronic signals, faster than the slower, damaging **S and surface waves**. Warning time is only the difference in arrival times (tens of seconds; Schulz: ~30–90 s), enough to stop trains, open elevators, and duck and cover.',
+    ['p wave|p-wave', 'faster|fast', 's wave|surface', 'seconds']);
+  Q('size', 'What is "soft first story" construction and why is it so vulnerable?',
+    'Buildings with an **open ground floor** on columns (parking, storefronts, pools) have little **horizontal strength** at the base. Horizontal shaking (especially **Love waves**) concentrates sideways forces in those columns, which buckle, and the upper floors **pancake** down. Common in older LA-area buildings built before modern codes.',
+    ['open|column|ground floor', 'horizontal', 'love', 'collapse|pancake']);
+  // L10 / readings
+  Q('cases', 'Reading (Schulz, "The Really Big One"): explain the "hand" analogy for how Cascadia stores and releases energy.',
+    'Hold one hand flat (Juan de Fuca plate) and slide the other on top (North America). The plates are **locked**, so as Juan de Fuca pushes under, the edge of North America is **squeezed and bulges upward** (the coast rises a few mm/yr and shortens eastward). When the fault finally slips, the bulge **snaps back**: the coast **drops** (up to ~2 m) and **lurches west**. That sudden vertical motion of the seafloor lifts the ocean and launches a **tsunami**. This is **elastic rebound** on a subduction megathrust.',
+    ['locked', 'bulge|squeez', 'snap|rebound|release', 'drop|subside', 'tsunami']);
+  Q('cases', 'What are "ghost forests," and what do they reveal about subduction earthquakes?',
+    'Stands of dead trees along coasts (Alaska after 1964; Washington and Oregon from 1700). In a great subduction earthquake, the coastal land **subsides suddenly** (the bulged plate edge drops), **seawater floods** coastal forests, and the trees die but remain standing for centuries. Their **tree rings** (dendrochronology) date the event (the last ring is from 1699), showing Cascadia\'s last M9 struck in 1700.',
+    ['subsid|drop', 'salt|seawater|flood', 'tree ring|dendro', '1700|cascadia']);
+  Q('cases', 'Reading (Komatsu, "After the Tsunami"): what physical details of the 2011 Tohoku tsunami illustrate how subduction tsunamis work?',
+    'The Pacific plate **thrust beneath Japan**; the **seabed rose** (~25 ft), lifting the whole ocean column above it. The water arrived ~45 minutes later at Kesennuma, first **drawing down** the river and then rising for **~20 minutes**: a sustained surge, not a single breaking wave. It exceeded the 6 m warning and reached second floors. Fires broke out from ruptured fuel tanks, and debris drifted across the Pacific to Alaska and British Columbia.',
+    ['thrust|subduct', 'seabed|seafloor|uplift', 'water column|ocean', 'warning', 'surge|rose|minutes']);
+  Q('cases', 'Why is the Pacific "Ring of Fire" where most of the largest earthquakes and most dangerous volcanoes occur?',
+    'The Pacific Ocean is ringed by **subduction zones** (Chile, Alaska–Aleutians, Kamchatka, Japan, Philippines, Indonesia, Cascadia). Subduction zones have the largest earthquakes (cold, thick plates; huge locked megathrusts in compression) and the most explosive volcanoes (slab water → flux melting → felsic, volatile-rich magma). The Pacific plate itself is being consumed on its northern and western edges.',
+    ['subduction', 'largest|biggest', 'explosive', 'water|flux', 'pacific']);
+  // L11
+  Q('gaps', 'Explain the fridge analogy for stick-slip and how it relates to why earthquakes exist at all.',
+    'Push an old fridge that has sat for years: nothing, nothing, nothing, then it **suddenly lurches** once your push overcomes **static friction**. Faults are the same: plates move steadily, but high friction keeps the fault **stuck** while stress builds, then it **slips suddenly**, which is the earthquake. If faults had low friction they would just **creep** smoothly and there would be few large earthquakes.',
+    ['friction', 'stuck|stick', 'sudden|lurch', 'stress|push', 'creep']);
+  // L12
+  Q('melting', 'Class poll: "Which tectonic setting has the most dangerous volcanism, and why?" Explain why each wrong option is wrong.',
+    '**Convergent margins (subduction zones)**, because their magmas are felsic and volatile-rich, so eruptions are explosive.\n- Divergent: true that pillow basalt piles build ~7 km of crust, but that\'s **not dangerous**: it\'s underwater and slow-flowing.\n- Hotspots: Hawaii and Iceland do attract clueless tourists, but their eruptions are **gentle** and mafic.\n- Transforms: volcanism there is essentially **absent**, so not dangerous.',
+    ['convergent|subduction', 'explosive', 'underwater|pillow', 'gentle|mafic', 'transform|none|absent']);
+  Q('melting', 'Why do hotspot volcanoes form age-progressive chains, and how can they measure plate speed?',
+    'The plume is **anchored in the deep mantle** (roughly stationary) while the plate **moves over it**. Each volcano forms above the plume, then is carried away and goes extinct as a new one forms, making a chain that gets **older with distance** from the active hotspot (Hawaii → Midway → Emperor seamounts). **Distance between two volcanoes ÷ difference in their ages = plate speed**, and the chain\'s orientation gives the **direction**.',
+    ['anchored|fixed|stationary', 'plate moves|moves over', 'older', 'distance', 'age', 'speed|velocity']);
+  Q('melting', 'Why don\'t continent–continent collisions like the Himalaya have volcanoes today?',
+    'No **oceanic slab** is subducting there anymore (both plates are buoyant continental lithosphere), so no water is being carried down to cause **flux melting**, and there is no upwelling for **decompression melting**. Without either melting mechanism, there\'s no magma supply, though there are large earthquakes from the compression.',
+    ['oceanic|slab', 'water', 'flux|dehydration', 'decompression|upwell', 'buoyant|continental']);
+  // L13
+  Q('magma', 'Class poll: you heat a rock made of many minerals. Which melt first, and why does this matter for subduction-zone volcanoes?',
+    '**Felsic minerals melt first** (quartz, feldspar, micas sit at the low-temperature bottom of Bowen\'s reaction series); mafic minerals like olivine melt last. This matters because cool, wet magma rising from the mantle wedge through continental crust can only melt the crust\'s **felsic** components, so the magma becomes increasingly **felsic**: viscous and explosive.',
+    ['felsic', 'bowen', 'low|lowest', 'crust', 'viscous|explosive']);
+  Q('magma', 'What is the difference between a mineral and a rock? Is ice a mineral?',
+    'A **mineral** is a **naturally occurring, inorganic, crystalline solid** with a definite chemistry (quartz = SiO₂, olivine = (Mg,Fe)₂SiO₄). A **rock** is an **aggregate of one or more minerals** (granite = feldspar + quartz + mica). Ice in a **glacier** is a mineral (natural, crystalline); ice cubes from your freezer are **not**, because they\'re not naturally occurring.',
+    ['naturally occurring|natural', 'crystalline', 'inorganic', 'aggregate', 'glacier']);
+  Q('magma', 'Use the periodic table / Lewis dot reasoning to explain why silicon bonds to four oxygens and why silicate tetrahedra link together.',
+    'Atoms "want" a full outer shell like the noble gases. **Oxygen** is two columns from neon, so it needs **2 electrons**; **silicon** is four from the noble-gas column, so it needs **4**. Si bonds with **four O** (the most abundant element), giving SiO₄, arranged as a **tetrahedron** to keep electron pairs far apart. Each O got only one of its two needed electrons, so each corner oxygen **bonds again**, to metals (making minerals) or to **other tetrahedra**, linking into chains and sheets. More silica → more linking → more viscous melt.',
+    ['electron', 'four|4', 'two|2', 'tetrahedr', 'link|chain|bond']);
+  // L14
+  Q('eruptions', 'HW4: Using P ∝ ρw² and energy conservation, explain conceptually why a gas-driven eruption at ~500 MPa can launch material ~25 km high.',
+    'Dimensional analysis shows gas pressure scales as **density × velocity²**, so a very high pressure (the rock\'s fracture strength, ~500 MPa) pushing a ~1,000 kg/m³ mixture gives an exit speed of **~700 m/s**. As material rises, its **kinetic energy converts to gravitational potential energy** (½w² = gh), giving a height of ~**25 km**, consistent with **Plinian** columns (25–50 km).',
+    ['pressure', 'velocity|speed', '700', 'kinetic', 'potential', 'plinian|25']);
+  Q('eruptions', 'Why does Mt. St. Helens look so different from Mauna Loa?',
+    '**Mt. St. Helens** is a **stratovolcano** in the Cascade arc (subduction): **felsic, viscous, volatile-rich** magma piles up near the vent and erupts explosively, building a **steep, layered cone** of lava, ash and pyroclastic deposits (until its 1980 Plinian eruption blew off its top). **Mauna Loa** is a **shield volcano** over the Hawaiian hotspot: **mafic, runny, low-volatile, high-volume** lava flows far before solidifying, building an enormous but **gently sloping** edifice.',
+    ['strato', 'shield', 'felsic', 'mafic', 'steep', 'gentle|broad', 'subduction|hotspot']);
+  Q('eruptions', 'What is the difference between Vulcanian and Plinian eruptions? Why do felsic volcanoes often go through phases?',
+    '**Vulcanian** eruptions are **short explosions** (minutes to hours) that "clear the throat": they blast out plugs of viscous lava as **bombs** and ash, with columns ~5–10 km high. **Plinian** eruptions are **sustained, gas-driven** columns 25–50 km high that can last hours to days and spawn pyroclastic flows. As a felsic volcano wakes up, gas-rich magma rises and **depressurizes**; early blasts clear the vent, then sustained exsolution drives a Plinian column, and draining the chamber can trigger **caldera collapse**.',
+    ['short', 'bomb', 'sustained', 'gas', 'column', 'caldera']);
+  Q('eruptions', 'Reading (Gordon, "The monster beneath"): what warning signs indicate a caldera like Campi Flegrei is heading toward eruption?',
+    '**Ground uplift** (the crust bulging; up to 2 m in the 1980s), **increasing earthquakes** as magma and fluids move, **rising fumarole temperatures**, and **gas composition changes** (from H₂S, rotten-egg smell, toward SO₂, which stings the eyes). The **rate of change** matters more than any single value. But crust breaking doesn\'t guarantee an eruption, which makes forecasting and evacuation decisions hard.',
+    ['uplift|deformation', 'earthquake|seismic', 'gas|so2|so₂', 'temperature|fumarole', 'rate']);
+
+  // Official key points (from the key-points slides / Midterm #1 study guide), shown as content bullets in the sidebar.
+  const keypoints = {
+    energy: [
+      'Three major energy sources: **interior heat → geological**, **Sun → meteorological**, **orbits → cosmological**.',
+      'All trace back to the **Big Bang** and solar-system formation (gravitational PE → KE → heat).',
+      'Interior heat = **primordial** (left from formation) + **radioactive decay** (~50/50, 46 TW).',
+      'Sun = fusion of **H into He**; 170,000 TW ≈ 4,000× interior.',
+      'Sources interact: **tides** (orbital energy → oceans/solid Earth; Io\'s volcanoes).',
+      'Work, energy, force, power; **F = ma**; units **J, N, W**; **MKS** units.',
+      'Potential, kinetic, heat energy; **energy is conserved**.',
+      '**Latent** (phase change, constant T) vs **sensible** heat (changes T); **heat capacity**.'
+    ],
+    mobile: [
+      '**Convection** gives a mobile surface (plate tectonics) and mobile atmosphere (circulation).',
+      'Water: **high heat capacity** + **high latent heat**; it "holds" energy and powers storms.',
+      'Planetary evolution matters: Earth is **big** (keeps heat) vs. Mars/Moon/Mercury; Venus runaway greenhouse.',
+      'Orbit (**habitable zone**, liquid water) and **fast rotation** (Coriolis, 3 cells, jet streams) drive disasters.'
+    ],
+    plates: [
+      'Mantle is **solid rock that flows**: proven by **isostasy** and **post-glacial rebound**.',
+      'Plate tectonics = **surface manifestation of mantle convection**; slabs pull plates.',
+      '**Lithosphere** (crust + top mantle) is cold → strong → broken into plates.',
+      'Cycle: plates **created at ridges**, **destroyed at subduction zones** (~200–250 Myr).',
+      'Three boundaries: **divergent, convergent, transform**.',
+      'Evidence: continent fit · magnetic stripes · paleomagnetism · hotspot tracks · EQ/volcano belts · deep quakes · seafloor age/depth/sediment · GPS.',
+      'Quake size: **divergent smallest, transform middle, convergent largest**.',
+      'Convergent types: **ocean–ocean, ocean–continent, continent–continent**; subduction zones = most dangerous.'
+    ],
+    mantle: [
+      '**Viscosity** = resistance to flow, units **Pa·s** (mantle ~10²¹).',
+      'Things sink **more slowly in more viscous** fluids (drag balances gravity).',
+      '**Convection**: hot rises, cold sinks (lava lamp; know its limits).',
+      'Rheology: **viscous** (mantle flow), **brittle** (quakes), **elastic** (seismic waves); Silly Putty.',
+      'Controls: **strain rate** and **temperature** (temperature-dependent viscosity).',
+      '**Isostasy**: less-dense continents "float" on denser mantle.',
+      '**Iceberg**: ~90% under water because ice is only slightly less dense than water.'
+    ],
+    faults: [
+      'Earthquakes occur **mainly on plate boundaries**; boundary type → quake type.',
+      'Earthquake = blocks of rock **slip across a fault**, generating **elastic waves**.',
+      'Faults: **normal** (extension), **reverse/thrust** (compression), **strike-slip** (shear).',
+      '**Hypocenter** (rupture start, with depth) vs **epicenter** (surface point above).',
+      '**Elastic rebound**: plate motion builds strain on a locked fault → rupture → rebound → waves.'
+    ],
+    waves: [
+      '**Body waves** (P, S) and **surface waves** (Love, Rayleigh).',
+      'Wave properties: **amplitude, wavelength, period, frequency**.',
+      'Seismograms record motion in **3 directions** (vertical + 2 horizontal); see P, S, Love, Rayleigh.',
+      'Seismic waves are **elastic waves** (Slinky); know each wave\'s motion.',
+      '**Locate** quakes from the **S–P delay** at multiple stations (3 circles).'
+    ],
+    size: [
+      'Magnitude scales (**Richter**, **moment**) are **logarithmic**: +1 = **10× shaking**.',
+      'Different waves → different ground motion → different damage; **Love waves** worst (horizontal).',
+      '**Wave frequency** matters (resonance with buildings).',
+      '**Site amplification** (soft sediment shakes more).',
+      'Magnitude ≠ intensity (Mercalli = shaking at a place).'
+    ],
+    cases: [
+      'Boundary → fault: **convergent = thrust, divergent = normal, transform = strike-slip**.',
+      'Normal: **L\'Aquila 2009**. Strike-slip: **Haiti 2010**. Thrust/subduction: **Chile 1960, Alaska 1964, Sumatra 2004, Japan 2011** (M9+).',
+      'Western US/Mexico hazards: **Cascadia, Mexico City, Loma Prieta, San Andreas**.',
+      'Don\'t memorize names/dates. **Know the concept each example illustrates.**'
+    ],
+    gaps: [
+      '**Stick-slip** behavior and the **earthquake cycle**.',
+      '**Seismic gap** = locked segment loaded by neighbors.',
+      'How the **slider-block demo** (1 and 2 bricks) illustrates both.'
+    ],
+    melting: [
+      'Mantle is **solid (!!!)**, convecting; heat focused into **slabs** (down) and **plumes** (up).',
+      'Volcanism settings: **divergent ridges**, **subduction zones**, **hotspots**.',
+      'Ridges: underwater, **not explosive**, **pillow basalt**.',
+      'Hotspots: **more melting** → ocean islands (Hawaii).',
+      'Subduction zones: **most explosive and dangerous**.',
+      'Melting: **decompression** at ridges/hotspots; **dehydration (water)** at subduction zones.',
+      'Ridge lavas sample the **shallow** mantle; hotspot lavas the **deep** mantle.'
+    ],
+    magma: [
+      'Crust is mostly **O and Si** → **silicate tetrahedra**.',
+      '**Bowen\'s series**: cooling → mafic first, felsic last; heating → **felsic melts first**.',
+      'Rock types: **igneous, sedimentary, metamorphic**.',
+      '**Felsic** (more silica) vs **mafic** (less silica).',
+      'Two key magma properties: **viscosity** and **volatiles** (H₂O, CO₂).',
+      'Viscosity controls: **temperature, silica, crystals**; mafic low, felsic high.',
+      'Volatiles **escape mafic** magma; **felsic traps** them.'
+    ],
+    eruptions: [
+      'Felsic: high viscosity + more volatiles → **dangerous**; mafic: low viscosity + fewer volatiles → gentle.',
+      'Mafic at **ridges & hotspots**; felsic, volatile-rich at **subduction zones**.',
+      'Styles: **non-explosive** (fire fountains, basalt flows, Strombolian) vs **explosive** (Vulcanian, Plinian, caldera).',
+      'Flows: **lava** (pahoehoe, a\'a) vs **pyroclastic flows & lahars** (felsic).',
+      'Volcanoes: **shield** (mafic, Hawaii) vs **stratovolcano/composite** (felsic, St. Helens, Fuji).',
+      'Shape controlled by the **three V\'s**: viscosity, volatiles, volume.'
+    ]
+  };
+
+  return { topics, cards, questions, keypoints };
 })();
